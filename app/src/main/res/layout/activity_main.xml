@@ -7,6 +7,30 @@
     tools:context="com.produce101ledlight.MainActivity"
     android:background="@android:color/black">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+        <ImageView
+            android:id="@+id/main_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="250dp"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+        <ImageView
+            android:id="@+id/main_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/main_bar"
+            android:layout_marginBottom="-10dp"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/triangle"/>
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/ic_settings"
         android:layout_width="35dp"
@@ -16,14 +40,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp" />
-
-    <ImageView
-        android:id="@+id/main_image"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_centerInParent="true"
-        android:background="@color/colorPrimaryDark"
-        android:src="@drawable/glow"/>
 
     <RelativeLayout
         android:id="@+id/layout_settings"
