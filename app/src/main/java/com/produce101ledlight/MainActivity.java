@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mColorAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private int colorDataSet[] = {
-            R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark,
-            R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark,
-            R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark,
+            R.color.yellow, R.color.green, R.color.blue,
+            R.color.pink, R.color.purple, R.color.deepblue,
+            R.color.lightblue, R.color.lightgreen,
     };
 
 
