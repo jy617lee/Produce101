@@ -2,6 +2,8 @@ package com.produce101ledlight;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.layout_settings)     RelativeLayout mLayoutSettings;
     @BindView(R.id.speed_txt)           TextView speedTextView;
 
+    private static int speed;
     @Override
     public void onBackPressed() {
         if(mLayoutSettings.getVisibility() == View.VISIBLE) {
@@ -48,17 +51,67 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.speed_up)
     public void speedUp(){
         int cur = Integer.parseInt(speedTextView.getText().toString());
-        if(cur < 5) {
-            speedTextView.setText(cur + 1 + "");
+
+        if(cur < 4) {
+            speed = cur+1;
+            speedTextView.setText(speed+ "");
+            if(speed == 1) {
+                Message newMsg = new Message();
+                newMsg.what = LIGHT_OFF;
+                handler.sendMessageDelayed(newMsg, 800 / speed);
+            }
         }
     }
     @OnClick(R.id.speed_down)
     public void speedDown(){
         int cur = Integer.parseInt(speedTextView.getText().toString());
         if(cur > 0) {
-            speedTextView.setText(cur - 1 + "");
+            speed = cur-1;
+            speedTextView.setText(speed + "");
+        }else{
+            handler.removeMessages(LIGHT_OFF);
         }
     }
+
+    Runnable lightOn = new Runnable() {
+        @Override
+        public void run() {
+            image.setBackgroundColor(getResources().getColor(colorDataSet[posColor]));
+        }
+    };
+
+    Runnable lightOff = new Runnable() {
+        @Override
+        public void run() {
+            image.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+    };
+
+    final int LIGHT_ON = 101, LIGHT_OFF = 102;
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Message newMsg = new Message();
+            switch(msg.what) {
+                case LIGHT_ON: {
+                    lightOn.run();
+                    newMsg.what = LIGHT_OFF;
+                    if (speed > 0) {
+                        handler.sendMessageDelayed(newMsg, 800 / speed);
+                    }
+                    break;
+                }
+                case LIGHT_OFF: {
+                    lightOff.run();
+                    newMsg.what = LIGHT_ON;
+                    if(speed > 0) {
+                        handler.sendMessageDelayed(newMsg, 800 / speed);
+                    }
+                }
+            }
+            return false;
+        }
+    });
 
     private RecyclerView.Adapter mColorAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -103,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         image.setBackgroundColor(getResources().getColor(colorDataSet[0]));
     }
 
+    private int posColor = 0;
     private void setPalleteClickListener(RecyclerView recyclerView) {
         final GestureDetector gestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -117,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 View child = rv.findChildViewUnder(e.getX(), e.getY());
                 if(child != null && gestureDetector.onTouchEvent(e)) {
                     int pos = rv.getChildAdapterPosition(child);
+                    posColor = pos;
                     image.setBackgroundColor(getResources().getColor(colorDataSet[pos]));
                 }
                 return false;
