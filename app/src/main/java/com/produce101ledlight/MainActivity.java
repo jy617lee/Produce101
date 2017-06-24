@@ -29,21 +29,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(mLayoutSettings.getVisibility() == View.VISIBLE) {
-            mLayoutSettings.setVisibility(View.GONE);
+            closeSettings();
             return;
         }
         super.onBackPressed();
     }
 
     @OnClick(R.id.btn_cancel)
-    public void cancelSettings(){
+    public void closeSettings() {
         mLayoutSettings.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.ic_settings)
     public void showSettings(){
         if(mLayoutSettings.getVisibility() == View.VISIBLE){
-            mLayoutSettings.setVisibility(View.GONE);
+            closeSettings();
         }else{
             mLayoutSettings.setVisibility(View.VISIBLE);
         }
