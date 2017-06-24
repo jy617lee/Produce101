@@ -95,14 +95,13 @@ public class MainActivity extends AppCompatActivity {
         mColorPallete.setAdapter(mColorAdapter);
 
         setPalleteClickListener(mColorPallete);
+        image.setBackgroundColor(getResources().getColor(colorDataSet[0]));
     }
 
     private void setPalleteClickListener(RecyclerView recyclerView) {
-        final GestureDetector gestureDetector = new GestureDetector(MainActivity.this,new GestureDetector.SimpleOnGestureListener()
-        {
+        final GestureDetector gestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
-            public boolean onSingleTapUp(MotionEvent e)
-            {
+            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
         });
