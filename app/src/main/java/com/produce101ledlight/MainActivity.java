@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    @OnClick(R.id.btn_cancel)
+    public void cancelSettings(){
+        mLayoutSettings.setVisibility(View.GONE);
+    }
+
     @OnClick(R.id.ic_settings)
     public void showSettings(){
         if(mLayoutSettings.getVisibility() == View.VISIBLE){
