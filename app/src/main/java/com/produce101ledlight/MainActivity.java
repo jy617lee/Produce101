@@ -21,10 +21,19 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.layout_settings)     RelativeLayout mLayoutSettings;
     @BindView(R.id.speed_txt)           TextView speedTextView;
 
+    @Override
+    public void onBackPressed() {
+        if(mLayoutSettings.getVisibility() == View.VISIBLE) {
+            mLayoutSettings.setVisibility(View.GONE);
+            return;
+        }
+        super.onBackPressed();
+    }
+
     @OnClick(R.id.ic_settings)
     public void showSettings(){
         if(mLayoutSettings.getVisibility() == View.VISIBLE){
-            mLayoutSettings.setVisibility(View.INVISIBLE);
+            mLayoutSettings.setVisibility(View.GONE);
         }else{
             mLayoutSettings.setVisibility(View.VISIBLE);
         }
@@ -58,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mLayoutSettings.setVisibility(View.GONE);
         setColorPallete();
     }
 
