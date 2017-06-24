@@ -66,10 +66,13 @@ public class MainActivity extends AppCompatActivity {
     public void speedDown(){
         int cur = Integer.parseInt(speedTextView.getText().toString());
         if(cur > 0) {
-            speed = cur-1;
+            speed = cur - 1;
             speedTextView.setText(speed + "");
-        }else{
-            handler.removeMessages(LIGHT_OFF);
+            if (speed == 0) {
+                handler.removeMessages(LIGHT_OFF);
+                handler.removeMessages(LIGHT_ON);
+                image.setBackgroundColor(getResources().getColor(colorDataSet[posColor]));
+            }
         }
     }
 
